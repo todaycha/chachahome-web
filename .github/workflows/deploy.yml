@@ -11,13 +11,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
+      - name: Setup Tailscale
+        uses: tailscale/github-action@v3
         with:
-          host: ${{ secrets.OCI_EDGE_HOST }}
-          username: ${{ secrets.OCI_EDGE_USER }}
-          key: ${{ secrets.OCI_EDGE_SSH_KEY }}
-          script: |
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Deploy via Tailscale SSH
+        run: |
+          # Use SOCKS5 proxy for SSH through Tailscale userspace networking
+          ALL_PROXY=socks5h://localhost:1055 ssh -o StrictHostKeyChecking=no ubuntu@vnic-edge-svc-prod-01 bash <<'DEPLOY'
             DEPLOY_DIR="/var/www/chachahome-web"
             REPO_URL="https://github.com/todaycha/chachahome-web.git"
 
@@ -36,3 +40,4 @@ jobs:
               sudo rm -rf /var/www/html
               sudo ln -s "$DEPLOY_DIR" /var/www/html
             fi
+          DEPLOY
