@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chachahome.duckdns.org/sitemap.xml
