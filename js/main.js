@@ -1,5 +1,12 @@
 // ChaChahome - Main JS
 
+// 이미 로그인된 사용자는 /app으로 바로 이동
+fetch('/auth/session', { credentials: 'same-origin' })
+  .then(function (res) {
+    if (res.ok) window.location.replace('/app/');
+  })
+  .catch(function () {});
+
 (function () {
   'use strict';
 
