@@ -29,6 +29,12 @@
         userEmailEl.textContent = email;
       }
       show();
+      // AT 만료 전 주기적 세션 갱신 (AT TTL 15분 → 10분 간격)
+      setInterval(function () {
+        fetch('/auth/session', { credentials: 'same-origin' })
+          .then(function (res) { if (!res.ok) redirectToLogin(); })
+          .catch(function () {});
+      }, 10 * 60 * 1000);
     })
     .catch(function () {
       redirectToLogin();
