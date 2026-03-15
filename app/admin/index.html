@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChaChahome - Admin</title>
+  <title>ChaChahome - 관리자</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
               <polyline points="16 17 21 12 16 7"/>
               <line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
-            <span class="logout-label">Logout</span>
+            <span class="logout-label">로그아웃</span>
           </button>
         </div>
       </div>
@@ -62,23 +62,23 @@
     <main class="app-main">
       <div class="container page-stack">
         <section class="welcome-section anim-entry" style="--delay: 0">
-          <h1 class="welcome-title">Admin Console</h1>
-          <p class="welcome-desc">Manage loginable accounts and control which apps each account can reach.</p>
+          <h1 class="welcome-title">관리자 콘솔</h1>
+          <p class="welcome-desc">로그인 가능한 계정을 관리하고, 각 계정이 접근할 수 있는 앱을 제어합니다.</p>
         </section>
 
         <div class="flash-message anim-entry" id="flashMessage" style="--delay: 1" hidden></div>
 
         <section class="stat-grid anim-entry" style="--delay: 1">
           <div class="stat-card">
-            <div class="stat-label">Active Users</div>
+            <div class="stat-label">활성 사용자</div>
             <div class="stat-value" id="statUsers">0</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Admins</div>
+            <div class="stat-label">관리자</div>
             <div class="stat-value" id="statAdmins">0</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Full Access</div>
+            <div class="stat-label">전체 접근</div>
             <div class="stat-value" id="statFullAccess">0</div>
           </div>
         </section>
@@ -87,37 +87,37 @@
           <section class="panel anim-entry" style="--delay: 2">
             <div class="panel-header">
               <div>
-                <h2 class="panel-title">Add Account</h2>
-                <p class="panel-desc">Provision a Google account and choose which apps it can open.</p>
+                <h2 class="panel-title">계정 추가</h2>
+                <p class="panel-desc">Google 계정을 등록하고 접근 가능한 앱을 선택합니다.</p>
               </div>
             </div>
 
             <form class="form-grid" id="addUserForm">
               <label class="form-label">
-                Email
+                이메일
                 <input class="form-input" id="addUserEmail" type="email" autocomplete="email" placeholder="user@example.com" required>
               </label>
 
               <label class="checkbox-row">
                 <input id="addAccessAllApps" type="checkbox">
-                <span>Allow all apps</span>
+                <span>모든 앱 허용</span>
               </label>
 
               <div>
-                <div class="form-label">Allowed apps</div>
-                <p class="form-help">Select one or more apps unless full access is enabled.</p>
+                <div class="form-label">허용된 앱</div>
+                <p class="form-help">전체 접근이 활성화되지 않은 경우 하나 이상의 앱을 선택하세요.</p>
                 <div class="checklist compact" id="addAppList"></div>
               </div>
 
-              <button class="primary-btn" type="submit">Add account</button>
+              <button class="primary-btn" type="submit">계정 추가</button>
             </form>
           </section>
 
           <section class="panel anim-entry" style="--delay: 3">
             <div class="panel-header">
               <div>
-                <h2 class="panel-title">Accounts</h2>
-                <p class="panel-desc">Update app access or remove accounts from sign-in eligibility.</p>
+                <h2 class="panel-title">계정 목록</h2>
+                <p class="panel-desc">앱 접근 권한을 수정하거나 로그인 자격에서 계정을 제거합니다.</p>
               </div>
             </div>
 

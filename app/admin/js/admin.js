@@ -52,7 +52,7 @@
   }
 
   function formatDate(value) {
-    if (!value) return 'Never';
+    if (!value) return '없음';
     try {
       return new Date(value).toLocaleString();
     } catch (error) {
@@ -90,7 +90,7 @@
         }
 
         if (!res.ok) {
-          var requestError = new Error((data.error && data.error.message) || ('Request failed (' + res.status + ')'));
+          var requestError = new Error((data.error && data.error.message) || ('요청 실패 (' + res.status + ')'));
           requestError.status = res.status;
           requestError.code = data.error && data.error.code;
           throw requestError;
@@ -112,7 +112,7 @@
       return;
     }
 
-    setFlash('error', error && error.message ? error.message : 'Request failed.');
+    setFlash('error', error && error.message ? error.message : '요청에 실패했습니다.');
   }
 
   function loadSession() {
@@ -122,7 +122,7 @@
 
       if (!permissions.isAdmin) {
         redirectToAppHub();
-        throw new Error('Admin privileges are required.');
+        throw new Error('관리자 권한이 필요합니다.');
       }
 
       if (userEmailEl) {
@@ -177,8 +177,8 @@
     if (!state.users.length) {
       userListEl.innerHTML = '' +
         '<div class="empty-state">' +
-          '<h3 class="empty-state-title">No accounts yet</h3>' +
-          '<p class="empty-state-desc">Add the first loginable account using the form on the left.</p>' +
+          '<h3 class="empty-state-title">등록된 계정이 없습니다</h3>' +
+          '<p class="empty-state-desc">왼쪽 양식을 사용하여 첫 번째 로그인 계정을 추가하세요.</p>' +
         '</div>';
       return;
     }
@@ -188,7 +188,7 @@
       var badgeLabel = user.isAdmin ? 'ADMIN' : 'USER';
       var selectedApps = Array.isArray(user.allowedApps) ? user.allowedApps : [];
       var lockedNote = user.isAdmin
-        ? '<p class="inline-note">Bootstrap admin account. Full access is always enforced.</p>'
+        ? '<p class="inline-note">기본 관리자 계정입니다. 전체 접근 권한이 항상 적용됩니다.</p>'
         : '';
       var controls = user.isAdmin
         ? ''
@@ -196,13 +196,13 @@
           '<div class="account-section">' +
             '<label class="checkbox-row">' +
               '<input type="checkbox" data-role="access-all"' + (user.accessAllApps ? ' checked' : '') + '>' +
-              '<span>Allow all apps</span>' +
+              '<span>모든 앱 허용</span>' +
             '</label>' +
             '<div class="checklist compact">' + renderChecklist(selectedApps, user.accessAllApps, false) + '</div>' +
           '</div>' +
           '<div class="account-actions">' +
-            '<button class="secondary-btn" type="button" data-action="save">Save</button>' +
-            '<button class="danger-btn" type="button" data-action="delete">Delete</button>' +
+            '<button class="secondary-btn" type="button" data-action="save">저장</button>' +
+            '<button class="danger-btn" type="button" data-action="delete">삭제</button>' +
           '</div>';
 
       return '' +
@@ -210,12 +210,12 @@
           '<div class="account-head">' +
             '<div>' +
               '<h3 class="account-title">' + escapeHtml(user.email) + '</h3>' +
-              '<p class="account-meta">Last login: ' + escapeHtml(formatDate(user.lastLoginAt)) + '</p>' +
+              '<p class="account-meta">마지막 로그인: ' + escapeHtml(formatDate(user.lastLoginAt)) + '</p>' +
             '</div>' +
             '<span class="account-badge ' + badgeClass + '">' + badgeLabel + '</span>' +
           '</div>' +
           '<div class="account-section">' +
-            '<p class="inline-note">Created: ' + escapeHtml(formatDate(user.createdAt)) + '</p>' +
+            '<p class="inline-note">생성일: ' + escapeHtml(formatDate(user.createdAt)) + '</p>' +
             lockedNote +
           '</div>' +
           controls +
@@ -265,7 +265,7 @@
     }).then(function () {
       addUserForm.reset();
       renderAddAppList();
-      setFlash('success', 'Account added.');
+      setFlash('success', '계정이 추가되었습니다.');
       return refreshData();
     }).catch(handleRequestError);
   }
@@ -281,7 +281,7 @@
         appSlugs: collectSelectedApps(card)
       })
     }).then(function () {
-      setFlash('success', 'Account updated.');
+      setFlash('success', '계정이 수정되었습니다.');
       return refreshData();
     }).catch(handleRequestError);
   }
@@ -289,16 +289,16 @@
   function handleDeleteUser(card) {
     var userId = card.getAttribute('data-user-id');
     var emailEl = card.querySelector('.account-title');
-    var email = emailEl ? emailEl.textContent : 'this account';
+    var email = emailEl ? emailEl.textContent : '이 계정';
 
-    if (!window.confirm('Delete access for ' + email + '?')) {
+    if (!window.confirm(email + '의 접근 권한을 삭제하시겠습니까?')) {
       return;
     }
 
     requestJson('/auth/admin/users/' + encodeURIComponent(userId), {
       method: 'DELETE'
     }).then(function () {
-      setFlash('success', 'Account removed.');
+      setFlash('success', '계정이 삭제되었습니다.');
       return refreshData();
     }).catch(handleRequestError);
   }
