@@ -69,34 +69,47 @@
         <div class="flash-message anim-entry" id="flashMessage" style="--delay: 1" hidden></div>
 
         <div class="admin-layout">
-          <section class="panel anim-entry" style="--delay: 2">
-            <div class="panel-header">
-              <div>
-                <h2 class="panel-title">계정 추가</h2>
-                <p class="panel-desc">Google 계정을 등록하고 접근 가능한 앱을 선택합니다.</p>
-              </div>
-            </div>
-
-            <form class="form-grid" id="addUserForm">
-              <label class="form-label">
-                이메일
-                <input class="form-input" id="addUserEmail" type="email" autocomplete="email" placeholder="user@example.com" required>
-              </label>
-
-              <label class="checkbox-row">
-                <input id="addAccessAllApps" type="checkbox">
-                <span>모든 앱 허용</span>
-              </label>
-
-              <div>
-                <div class="form-label">허용된 앱</div>
-                <p class="form-help">전체 접근이 활성화되지 않은 경우 하나 이상의 앱을 선택하세요.</p>
-                <div class="checklist compact" id="addAppList"></div>
+          <div class="admin-left-col">
+            <section class="panel anim-entry" style="--delay: 2">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">계정 추가</h2>
+                  <p class="panel-desc">Google 계정을 등록하고 접근 가능한 앱을 선택합니다.</p>
+                </div>
               </div>
 
-              <button class="primary-btn" type="submit">계정 추가</button>
-            </form>
-          </section>
+              <form class="form-grid" id="addUserForm">
+                <label class="form-label">
+                  이메일
+                  <input class="form-input" id="addUserEmail" type="email" autocomplete="email" placeholder="user@example.com" required>
+                </label>
+
+                <label class="checkbox-row">
+                  <input id="addAccessAllApps" type="checkbox">
+                  <span>모든 앱 허용</span>
+                </label>
+
+                <div>
+                  <div class="form-label">허용된 앱</div>
+                  <p class="form-help">전체 접근이 활성화되지 않은 경우 하나 이상의 앱을 선택하세요.</p>
+                  <div class="checklist compact" id="addAppList"></div>
+                </div>
+
+                <button class="primary-btn" type="submit">계정 추가</button>
+              </form>
+            </section>
+
+            <section class="panel anim-entry" style="--delay: 3">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">로그인 시도 기록</h2>
+                  <p class="panel-desc">등록되지 않은 계정의 로그인 시도 목록입니다.</p>
+                </div>
+              </div>
+
+              <div class="account-list" id="loginAttemptList"></div>
+            </section>
+          </div>
 
           <section class="panel anim-entry" style="--delay: 3">
             <div class="panel-header">
@@ -107,17 +120,6 @@
             </div>
 
             <div class="account-list" id="userList"></div>
-          </section>
-
-          <section class="panel anim-entry" style="--delay: 4">
-            <div class="panel-header">
-              <div>
-                <h2 class="panel-title">로그인 시도 기록</h2>
-                <p class="panel-desc">등록되지 않은 계정의 로그인 시도 목록입니다.</p>
-              </div>
-            </div>
-
-            <div class="account-list" id="loginAttemptList"></div>
           </section>
         </div>
       </div>

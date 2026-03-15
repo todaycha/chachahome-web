@@ -412,6 +412,11 @@ a {
   margin-top: 24px;
 }
 
+.admin-left-col {
+  display: grid;
+  gap: 24px;
+}
+
 @media (min-width: 960px) {
   .admin-layout {
     grid-template-columns: 320px 1fr;
