@@ -17,9 +17,12 @@
   var statAdminsEl = document.getElementById('statAdmins');
   var statFullAccessEl = document.getElementById('statFullAccess');
 
+  var loginAttemptListEl = document.getElementById('loginAttemptList');
+
   var state = {
     apps: [],
-    users: []
+    users: [],
+    loginAttempts: []
   };
 
   function show() {
@@ -223,6 +226,31 @@
     }).join('');
   }
 
+  function renderLoginAttempts() {
+    if (!loginAttemptListEl) return;
+
+    if (!state.loginAttempts.length) {
+      loginAttemptListEl.innerHTML = '' +
+        '<div class="empty-state">' +
+          '<h3 class="empty-state-title">기록 없음</h3>' +
+          '<p class="empty-state-desc">미등록 계정의 로그인 시도가 없습니다.</p>' +
+        '</div>';
+      return;
+    }
+
+    loginAttemptListEl.innerHTML = state.loginAttempts.map(function (attempt) {
+      return '' +
+        '<div class="attempt-row">' +
+          '<div class="attempt-info">' +
+            '<span class="attempt-email">' + escapeHtml(attempt.email) + '</span>' +
+            '<span class="attempt-meta">' + escapeHtml(formatDate(attempt.lastAttemptAt)) +
+              ' · ' + attempt.attemptCount + '회</span>' +
+          '</div>' +
+          '<button class="secondary-btn compact-btn" type="button" data-action="fill-email" data-email="' + escapeHtml(attempt.email) + '">추가</button>' +
+        '</div>';
+    }).join('');
+  }
+
   function syncChecklistDisabledState(scope, disabled) {
     var checkboxes = scope.querySelectorAll('input[data-role="app-toggle"], input[data-app-slug]');
     Array.prototype.forEach.call(checkboxes, function (checkbox) {
@@ -241,12 +269,15 @@
   function refreshData() {
     return Promise.all([
       requestJson('/auth/admin/apps'),
-      requestJson('/auth/admin/users')
+      requestJson('/auth/admin/users'),
+      requestJson('/auth/admin/login-attempts')
     ]).then(function (results) {
       state.apps = results[0].data || [];
       state.users = results[1].data || [];
+      state.loginAttempts = results[2].data || [];
       renderAddAppList();
       renderUsers();
+      renderLoginAttempts();
       renderStats();
       setFlash('', '');
     });
@@ -340,6 +371,23 @@
       } else if (action === 'delete') {
         handleDeleteUser(card);
       }
+    });
+  }
+
+  if (loginAttemptListEl) {
+    loginAttemptListEl.addEventListener('click', function (event) {
+      var target = event.target;
+      if (!(target instanceof Element)) return;
+
+      var button = target.closest('button[data-action="fill-email"]');
+      if (!button) return;
+
+      var email = button.getAttribute('data-email');
+      if (!email || !addUserEmailEl) return;
+
+      addUserEmailEl.value = email;
+      addUserEmailEl.focus();
+      addUserEmailEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 

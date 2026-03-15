@@ -650,6 +650,53 @@ a {
   color: var(--color-text-tertiary);
 }
 
+.attempt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: background 0.15s;
+}
+
+.attempt-row:hover {
+  background: var(--color-border-light);
+}
+
+.attempt-row + .attempt-row {
+  margin-top: 8px;
+}
+
+.attempt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.attempt-email {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attempt-meta {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.compact-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
